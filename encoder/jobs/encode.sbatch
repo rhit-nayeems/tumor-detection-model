@@ -34,4 +34,11 @@ export nnUNet_compile=f
 
 export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1
 
-python $AP/extract_features.py --chunk $SLURM_ARRAY_TASK_ID --num-chunks 20 --out $AP/features
+# Use the same frozen checkpoint for every array task.
+: "${ENCODER_CHECKPOINT:?Set a frozen checkpoint filename in fold_0}"
+: "${ENCODER_CHECKPOINT_SHA256:?Set the SHA-256 of that checkpoint}"
+: "${FEATURE_OUT:?Set a fresh output directory for this extraction run}"
+
+python "$AP/extract_features.py" --chunk "$SLURM_ARRAY_TASK_ID" --num-chunks 20 \
+  --out "$FEATURE_OUT" --checkpoint "$ENCODER_CHECKPOINT" \
+  --checkpoint-sha256 "$ENCODER_CHECKPOINT_SHA256"
