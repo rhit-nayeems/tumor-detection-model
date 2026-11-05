@@ -23,9 +23,10 @@ To preview from the project root:
 Open http://127.0.0.1:8000. The page must be served over HTTP, rather than
 opened as a local file, so the browser can load the JSON assets.
 
-For GitHub Pages, publish branch `main`, folder `/docs`, from the personal
-repository's Settings > Pages. The source and JSON assets are already in `docs/`;
-there is no Python runtime or build step on the host. Keep the team repository's
+For GitHub Pages, select GitHub Actions in the personal repository's Settings >
+Pages. `.github/workflows/pages.yml` publishes `docs/` when its files change on
+`main`, or when run manually. It is restricted to the personal repository.
+There is no Python runtime or build step on the host. Keep the team repository's
 remote separate from the personal repository.
 
 `demo/export_pages.py` regenerates the browser assets from the local v2 checkpoint
